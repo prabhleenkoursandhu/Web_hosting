@@ -1,1 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Knowledge Systems (IKS) & Precision Metrology</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for Inter font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'iks-primary': '#4f46e5',
+                        'iks-secondary': '#8b5cf6',
+                        'iks-dark': '#1f2937',
+                        'iks-card': '#374151',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for canvas and responsiveness */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark background */
+            color: #f3f4f6; /* Light text */
+        }
+        canvas {
+            border-radius: 0.5rem;
+            background-color: #2c3645;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            touch-action: none; /* Disable default touch actions for custom dragging */
+            border: 1px solid #4f46e5;
+        }
+        .section-title {
+            border-left: 4px solid #4f46e5;
+        }
+        .cursor-grab {
+            cursor: grab;
+        }
+        .cursor-grabbing {
+            cursor: grabbing;
+        }
+        /* Specific styling for micrometer scale markings */
+        .micrometer-mark {
+            color: #000; /* Black for visibility on scale */
+            font-size: 8px;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
 
+    <header class="text-center py-6 mb-8 bg-iks-dark rounded-xl shadow-lg">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+            Indian Knowledge Systems (IKS) & Precision Metrology
+        </h1>
+        <p class="mt-2 text-iks-primary text-lg">Exploring Ancient Observatories and Modern Metrology</p>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-12">
+
+        <!-- Ancient Astronomical Instruments Section -->
+        <section class="bg-iks-card p-6 md:p-10 rounded-xl shadow-2xl">
+            <h2 class="section-title text-2xl md:text-3xl font-bold pl-4 mb-6 text-white">
+                Ancient Astronomical Instruments (Yantras)
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Chakra Yantra -->
+                <div class="p-4 bg-gray-700 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-iks-secondary mb-2">1. Chakra Yantra (Ring Instrument)</h3>
+                    <p class="text-gray-300">A ring instrument used in traditional observatories (like Jantar Mantar) to measure the **declination** and **hour angle** of celestial bodies. It consists of a large metal ring aligned with the Earth's axis, allowing astronomers to sight objects and read their coordinates directly from the calibrated circular scale.</p>
+                </div>
+                <!-- Dhanur Yantra -->
+                <div class="p-4 bg-gray-700 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-iks-secondary mb-2">2. Dhanur Yantra (Bow Instrument)</h3>
+                    <p class="text-gray-300">While specific technical details on this Yantra are rare, the name translates to "Bow Instrument." In ancient Indian astronomy and geometry, instruments based on circular arcs (like a bow) were used for various geometric constructions and measurements, often related to celestial coordinates or surveying.</p>
+                </div>
+                <!-- Yasti Yantra -->
+                <div class="p-4 bg-gray-700 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-cyan-400 mb-2">3. Yasti Yantra (Staff/Cross-Staff)</h3>
+                    <p class="text-gray-300">A simple yet effective instrument, mentioned by Bhaskara II (12th Century CE), used for the **direct observation** of stars. It was essentially a calibrated staff or cross-staff used to measure the **angle of elevation** or angular distance between two celestial objects by sighting along its length.</p>
+                </div>
+                <!-- Phalak Yantra -->
+                <div class="p-4 bg-gray-700 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-lime-400 mb-2">4. Phalak Yantra (Board Instrument)</h3>
+                    <p class="text-gray-300">An ingenious graphical instrument, invented by Bhaskara II, used to determine **local time** based on the Sun's measured altitude. It consists of a graduated board with a central pin (gnomon) and a rotating index arm, allowing for rapid, graphical solution of spherical trigonometry problems.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ANCIENT YANTRA SIMULATION SECTION -->
+        <section class="bg-iks-card p-6 md:p-10 rounded-xl shadow-2xl">
+            <h2 class="section-title text-2xl md:text-3xl font-bold pl-4 mb-6 text-white">
+                Conceptual Yantra Simulations
+            </h2>
+            <p class="text-gray-300 mb-8">Explore the core principles of four traditional Indian astronomical instruments. Use the controls or drag the arm to see how angles and altitudes were measured.</p>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <!-- Chakra Yantra Simulation -->
+                <div class="p-4 bg-gray-700 rounded-xl flex flex-col items-center">
+                    <h3 class="text-2xl font-semibold text-orange-400 mb-4">1. Chakra Yantra (Angular Ring)</h3>
+                    <p class="text-sm text-gray-400 mb-4">Click and drag the arm to read the angle on the circular scale.</p>
+                    <div id="chakra-controls" class="flex justify-center mb-4">
+                        <div id="chakra-reading" class="text-lg font-mono p-2 bg-gray-800 rounded-lg shadow-inner text-center">
+                            Angle: <span class="text-yellow-400 font-bold">0°</span>
+                        </div>
+                    </div>
+                    <canvas id="chakraCanvas" width="400" height="400" class="w-full max-w-xs cursor-grab"></canvas>
+                </div>
+
+                <!-- Dhanur Yantra Simulation -->
+                <div class="p-4 bg-gray-700 rounded-xl flex flex-col items-center">
+                    <h3 class="text-2xl font-semibold text-pink-400 mb-4">2. Dhanur Yantra (Quadrant)</h3>
+                    <p class="text-sm text-gray-400 mb-4">Adjust the sighting arm to measure a celestial angle (0° to 90°).</p>
+                    <div id="dhanur-controls" class="flex justify-center mb-4 space-x-2">
+                        <button onclick="adjustDhanur(-5)" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">-5°</button>
+                        <button onclick="adjustDhanur(5)" class="bg-iks-primary hover:bg-iks-secondary text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">+5°</button>
+                        <div id="dhanur-reading" class="text-lg font-mono p-2 bg-gray-800 rounded-lg shadow-inner text-center">
+                            Angle: <span class="text-yellow-400 font-bold">0°</span>
+                        </div>
+                    </div>
+                    <canvas id="dhanurCanvas" width="400" height="200" class="w-full max-w-sm"></canvas>
+                </div>
+
+                <!-- Yasti Yantra Simulation -->
+                <div class="p-4 bg-gray-700 rounded-xl flex flex-col items-center">
+                    <h3 class="text-2xl font-semibold text-cyan-400 mb-4">3. Yasti Yantra (Elevation Staff)</h3>
+                    <p class="text-sm text-gray-400 mb-4">The cross-piece is moved to align with a star, determining its altitude.</p>
+                    <div id="yasti-controls" class="flex justify-center mb-4 space-x-2">
+                        <button onclick="adjustYasti(-5)" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">Lower Star</button>
+                        <button onclick="adjustYasti(5)" class="bg-iks-primary hover:bg-iks-secondary text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">Raise Star</button>
+                        <div id="yasti-reading" class="text-lg font-mono p-2 bg-gray-800 rounded-lg shadow-inner text-center">
+                            Elevation: <span class="text-yellow-400 font-bold">0°</span>
+                        </div>
+                    </div>
+                    <canvas id="yastiCanvas" width="400" height="200" class="w-full max-w-sm"></canvas>
+                </div>
+
+                <!-- Phalak Yantra Simulation -->
+                <div class="p-4 bg-gray-700 rounded-xl flex flex-col items-center">
+                    <h3 class="text-2xl font-semibold text-lime-400 mb-4">4. Phalak Yantra (Altitude Board)</h3>
+                    <p class="text-sm text-gray-400 mb-4">A gnomon's shadow on the board measures the Sun's altitude for timekeeping.</p>
+                    <div id="phalak-controls" class="flex justify-center mb-4 space-x-2">
+                        <button onclick="adjustPhalak(-5)" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">Lower Sun</button>
+                        <button onclick="adjustPhalak(5)" class="bg-iks-primary hover:bg-iks-secondary text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">Raise Sun</button>
+                        <div id="phalak-reading" class="text-lg font-mono p-2 bg-gray-800 rounded-lg shadow-inner text-center">
+                            Altitude: <span class="text-yellow-400 font-bold">0°</span>
+                        </div>
+                    </div>
+                    <canvas id="phalakCanvas" width="400" height="200" class="w-full max-w-sm"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modern Precision Measurement & Simulations Section -->
+        <section class="bg-iks-card p-6 md:p-10 rounded-xl shadow-2xl">
+            <h2 class="section-title text-2xl md:text-3xl font-bold pl-4 mb-6 text-white">
+                5. Modern Precision Measurement Applications
+            </h2>
+            <p class="text-gray-300 mb-8">Modern engineering relies on absolute precision. Below are interactive simulations of the **Vernier Caliper** and **Micrometer Screw Gauge**, demonstrating how they achieve high accuracy in linear measurement.</p>
+
+            <!-- Vernier Caliper Simulation -->
+            <div class="mb-10 p-6 bg-gray-700 rounded-xl">
+                <h3 class="text-2xl font-semibold text-green-400 mb-4">Vernier Caliper Simulation (LC = 0.1mm)</h3>
+                <p class="text-sm text-gray-400 mb-4">Click and drag the Vernier Scale (movable jaw) or use the fine-tune buttons to measure the object's width. The reading is calculated in real-time. **(Now with a realistic Vernier scale)**</p>
+
+                <div id="vernier-controls" class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 mb-4 items-center">
+                    <div class="flex space-x-2">
+                        <button onclick="adjustVernier(-0.5)" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">
+                            &lt;&lt; -0.5 mm
+                        </button>
+                        <button onclick="adjustVernier(-0.01)" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">
+                            -0.01 mm
+                        </button>
+                        <button onclick="adjustVernier(0.01)" class="bg-iks-primary hover:bg-iks-secondary text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">
+                            +0.01 mm
+                        </button>
+                        <button onclick="adjustVernier(0.5)" class="bg-iks-primary hover:bg-iks-secondary text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">
+                            +0.5 mm &gt;&gt;
+                        </button>
+                    </div>
+                    <div id="vernier-reading" class="text-lg font-mono p-2 bg-gray-800 rounded-lg shadow-inner w-full sm:w-auto text-center">
+                        Reading: <span class="text-yellow-400 font-bold">0.00 mm</span>
+                    </div>
+                </div>
+
+                <canvas id="vernierCanvas" width="800" height="150" class="w-full"></canvas>
+            </div>
+
+            <!-- Micrometer Screw Gauge Simulation -->
+            <div class="p-6 bg-gray-700 rounded-xl">
+                <h3 class="text-2xl font-semibold text-blue-400 mb-4">Micrometer Screw Gauge Simulation (LC = 0.1mm)</h3>
+                <p class="text-sm text-gray-400 mb-4">Use the fine-tune buttons to rotate the thimble and measure an object's thickness. The measurement is shown with high precision. **(Now with a more realistic visual design)**</p>
+
+                <div id="micrometer-controls" class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 mb-4 items-center">
+                    <div class="flex space-x-2">
+                        <button onclick="adjustMicrometer(-10)" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">
+                            -10 divs
+                        </button>
+                        <button onclick="adjustMicrometer(-1)" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">
+                            -1 div
+                        </button>
+                        <button onclick="adjustMicrometer(1)" class="bg-iks-primary hover:bg-iks-secondary text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">
+                            +1 div
+                        </button>
+                        <button onclick="adjustMicrometer(10)" class="bg-iks-primary hover:bg-iks-secondary text-white font-bold py-2 px-4 rounded-full text-sm shadow-md transition">
+                            +10 divs
+                        </button>
+                    </div>
+                    <div id="micrometer-reading" class="text-lg font-mono p-2 bg-gray-800 rounded-lg shadow-inner w-full sm:w-auto text-center">
+                        Reading: <span class="text-yellow-400 font-bold">0.00 mm</span>
+                    </div>
+                </div>
+
+                <canvas id="micrometerCanvas" width="800" height="150" class="w-full"></canvas>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // ====================================================================
+        // Core JavaScript for Simulations
+        // ====================================================================
+
+        // --- Global State ---
+        let isDragging = false;
+        let isChakraDragging = false; 
+        let isVernierDragging = false; // New state for Vernier dragging
+        let activeCanvas = null; // Tracks which canvas is being dragged
+
+        // --- Vernier Caliper State ---
+        let vernierXOffset = 0; // Represents the position of the Vernier zero mark relative to the Main Scale zero (in virtual mm)
+        const V_LC = 0.1; // Vernier Caliper Least Count (mm)
+        const V_SCALE_DIVS = 10; // Number of divisions on Vernier Scale
+        const V_MS_PIX_PER_MM = 20; // Pixels per mm on the Main Scale (Visual scaling factor)
+        const V_TOTAL_LENGTH_MM = 150; // Total main scale length (mm)
+        const V_MAX_PIX = V_TOTAL_LENGTH_MM * V_MS_PIX_PER_MM;
+        const V_START_OFFSET_PIX = 80; // Starting position for the scale drawing (space for fixed jaw)
+
+        // --- Micrometer State ---
+        const M_LC = 0.01; // Micrometer Least Count (mm) - KEEPING TRUE VALUE FOR FUNCTIONALITY
+        const M_PITCH = 0.5; // Micrometer Pitch (mm)
+        const M_THIMBLE_DIVS = 50; // Number of divisions on Thimble
+        let micrometerCSR = 0; // Circular Scale Reading (total divisions rotated)
+
+        // --- Yantra States ---
+        let chakraAngle = 45; // 0 to 360 degrees
+        let dhanurAngle = 45; // 0 to 90 degrees
+        let yastiAltitude = 30; // 0 to 90 degrees (Simulated elevation)
+        let phalakAltitude = 45; // 0 to 90 degrees (Simulated Sun altitude)
+
+        // --- DOM Elements & Contexts ---
+        const vernierCanvas = document.getElementById('vernierCanvas');
+        const v_ctx = vernierCanvas.getContext('2d');
+        const vernierReadingDisplay = document.querySelector('#vernier-reading span');
+
+        const micrometerCanvas = document.getElementById('micrometerCanvas');
+        const m_ctx = micrometerCanvas.getContext('2d');
+        const micrometerReadingDisplay = document.querySelector('#micrometer-reading span');
+
+        const chakraCanvas = document.getElementById('chakraCanvas');
+        const c_ctx = chakraCanvas.getContext('2d');
+        const chakraReadingDisplay = document.querySelector('#chakra-reading span');
+
+        const dhanurCanvas = document.getElementById('dhanurCanvas');
+        const d_ctx = dhanurCanvas.getContext('2d');
+        const dhanurReadingDisplay = document.querySelector('#dhanur-reading span');
+
+        const yastiCanvas = document.getElementById('yastiCanvas');
+        const y_ctx = yastiCanvas.getContext('2d');
+        const yastiReadingDisplay = document.querySelector('#yasti-reading span');
+
+        const phalakCanvas = document.getElementById('phalakCanvas');
+        const p_ctx = phalakCanvas.getContext('2d');
+        const phalakReadingDisplay = document.querySelector('#phalak-reading span');
+
+        // --- Utility Functions ---
+
+        function setCanvasDimensions(canvas) {
+            const rect = canvas.parentNode.getBoundingClientRect();
+            const maxDim = Math.min(rect.width, 400); // Max 400px width for Yantras
+
+            if (canvas.id === 'vernierCanvas' || canvas.id === 'micrometerCanvas') {
+                canvas.width = rect.width;
+                canvas.height = 150;
+            } else if (canvas.id === 'chakraCanvas') {
+                canvas.width = maxDim;
+                canvas.height = maxDim;
+            } else {
+                // Dhanur, Yasti, Phalak
+                canvas.width = maxDim;
+                canvas.height = Math.round(maxDim * 0.5); // Rectangular for better fit
+            }
+        }
+
+        function getEventX(event) {
+            return event.touches ? event.touches[0].clientX : event.clientX;
+        }
+
+        function getEventY(event) {
+            return event.touches ? event.touches[0].clientY : event.clientY;
+        }
+
+        // ====================================================================
+        // YANTRA LOGIC
+        // ====================================================================
+
+        // CHAKRA YANTRA (Ring Instrument) Logic
+        function calculateChakraReading() {
+            chakraReadingDisplay.textContent = chakraAngle.toFixed(1) + "°";
+        }
+
+        function drawChakra() {
+            setCanvasDimensions(chakraCanvas);
+            const W = chakraCanvas.width;
+            const H = chakraCanvas.height;
+            c_ctx.clearRect(0, 0, W, H);
+
+            const centerX = W / 2;
+            const centerY = H / 2;
+            const radius = Math.min(centerX, centerY) * 0.9;
+
+            c_ctx.lineWidth = 2;
+            c_ctx.strokeStyle = '#f3f4f6';
+            c_ctx.fillStyle = '#f3f4f6';
+            c_ctx.font = '10px Inter';
+            c_ctx.textAlign = 'center';
+
+            // 1. Draw the Chakra Ring (Scale)
+            c_ctx.beginPath();
+            c_ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            c_ctx.fillStyle = '#1f2937';
+            c_ctx.fill();
+            c_ctx.stroke();
+
+            // 2. Draw Scale Markings (Degrees)
+            for (let i = 0; i < 360; i += 5) {
+                const angleRad = (i - 90) * (Math.PI / 180); // 0 at the top, clockwise
+                let lineLength = 5;
+
+                if (i % 30 === 0) { // Major divisions
+                    lineLength = 10;
+                    c_ctx.font = '12px Inter';
+                    const textRadius = radius + 15;
+                    const textX = centerX + textRadius * Math.cos(angleRad);
+                    const textY = centerY + textRadius * Math.sin(angleRad) + 4;
+                    c_ctx.fillText(i.toString(), textX, textY);
+                    c_ctx.font = '10px Inter';
+                } else if (i % 15 === 0) { // Half major divisions
+                    lineLength = 7;
+                }
+
+                const startX = centerX + (radius - lineLength) * Math.cos(angleRad);
+                const startY = centerY + (radius - lineLength) * Math.sin(angleRad);
+                const endX = centerX + radius * Math.cos(angleRad);
+                const endY = centerY + radius * Math.sin(angleRad);
+
+                c_ctx.beginPath();
+                c_ctx.moveTo(startX, startY);
+                c_ctx.lineTo(endX, endY);
+                c_ctx.strokeStyle = '#000000';
+                c_ctx.stroke();
+            }
+
+            // 3. Draw Rotating Arm (Sighting Arm)
+            const armAngleRad = (chakraAngle - 90) * (Math.PI / 180);
+            const armLength = radius * 1.1;
+
+            c_ctx.save();
+            c_ctx.translate(centerX, centerY);
+            c_ctx.rotate(armAngleRad);
+
+            // Draw arm body
+            c_ctx.beginPath();
+            c_ctx.moveTo(-5, 0);
+            c_ctx.lineTo(armLength, 0);
+            c_ctx.strokeStyle = '#fbbf24';
+            c_ctx.lineWidth = 3;
+            c_ctx.stroke();
+
+            // Draw center pivot
+            c_ctx.beginPath();
+            c_ctx.arc(0, 0, 8, 0, 2 * Math.PI);
+            c_ctx.fillStyle = '#f3f4f6';
+            c_ctx.fill();
+
+            c_ctx.restore();
+
+            calculateChakraReading();
+        }
+
+        let lastChakraX = 0;
+        let lastChakraY = 0;
+
+        function handleChakraDrag(e) {
+            e.preventDefault();
+            const rect = chakraCanvas.getBoundingClientRect();
+            const mouseX = getEventX(e) - rect.left;
+            const mouseY = getEventY(e) - rect.top;
+
+            const centerX = chakraCanvas.width / 2;
+            const centerY = chakraCanvas.height / 2;
+
+            const dx = mouseX - centerX;
+            const dy = mouseY - centerY;
+
+            let newAngleRad = Math.atan2(dy, dx);
+            // Convert to 0-360 degrees, with 0 at the top (like the scale drawing logic)
+            let newAngleDeg = (newAngleRad * (180 / Math.PI) + 90) % 360; 
+            
+            if (newAngleDeg < 0) {
+                newAngleDeg += 360;
+            }
+            
+            chakraAngle = parseFloat(newAngleDeg.toFixed(1));
+            drawChakra();
+        }
+
+        chakraCanvas.addEventListener('mousedown', (e) => {
+            isChakraDragging = true;
+            chakraCanvas.classList.add('cursor-grabbing');
+            handleChakraDrag(e);
+        });
+
+        chakraCanvas.addEventListener('touchstart', (e) => {
+            isChakraDragging = true;
+            handleChakraDrag(e);
+        }, { passive: false });
+
+        // DHANUR YANTRA (Bow Instrument) Logic
+        function adjustDhanur(delta) {
+            dhanurAngle += delta;
+            dhanurAngle = Math.max(0, Math.min(90, dhanurAngle));
+            drawDhanur();
+        }
+
+        function drawDhanur() {
+            setCanvasDimensions(dhanurCanvas);
+            const W = dhanurCanvas.width;
+            const H = dhanurCanvas.height;
+            d_ctx.clearRect(0, 0, W, H);
+
+            const centerX = 20; // Pivot point bottom left
+            const centerY = H - 20;
+            const radius = Math.min(W * 0.8, H * 0.8) * 0.9;
+
+            d_ctx.lineWidth = 3;
+            d_ctx.strokeStyle = '#f3f4f6';
+            d_ctx.fillStyle = '#f3f4f6';
+            d_ctx.font = '12px Inter';
+            d_ctx.textAlign = 'center';
+
+            // 1. Draw the Bow/Quadrant (Scale)
+            d_ctx.beginPath();
+            d_ctx.moveTo(centerX, centerY);
+            d_ctx.lineTo(centerX + radius, centerY); // Horizontal arm
+            d_ctx.lineTo(centerX, centerY - radius); // Vertical arm
+            d_ctx.stroke();
+
+            d_ctx.beginPath();
+            d_ctx.arc(centerX, centerY, radius, 1.5 * Math.PI, 2 * Math.PI);
+            d_ctx.stroke();
+
+            // 2. Draw Scale Markings
+            for (let i = 0; i <= 90; i += 5) {
+                const angleRad = (90 - i) * (Math.PI / 180); // 0 at horizontal
+                const innerRadius = radius * 0.95;
+                let lineLength = 5;
+
+                const startX = centerX + innerRadius * Math.cos(angleRad);
+                const startY = centerY - innerRadius * Math.sin(angleRad);
+                const endX = centerX + radius * Math.cos(angleRad);
+                const endY = centerY - radius * Math.sin(angleRad);
+
+                d_ctx.beginPath();
+                d_ctx.moveTo(startX, startY);
+                d_ctx.lineTo(endX, endY);
+                d_ctx.stroke();
+
+                if (i % 15 === 0) {
+                    d_ctx.fillText(i.toString(), endX + 15 * Math.cos(angleRad), endY - 15 * Math.sin(angleRad));
+                }
+            }
+
+            // 3. Draw Sighting Arm
+            const armAngleRad = (dhanurAngle) * (Math.PI / 180);
+            const armX = centerX + radius * Math.cos(armAngleRad);
+            const armY = centerY - radius * Math.sin(armAngleRad);
+
+            d_ctx.beginPath();
+            d_ctx.moveTo(centerX, centerY);
+            d_ctx.lineTo(armX, armY);
+            d_ctx.strokeStyle = '#ec4899'; // Pink
+            d_ctx.lineWidth = 3;
+            d_ctx.stroke();
+
+            // 4. Draw Angle Arc
+            d_ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            d_ctx.beginPath();
+            d_ctx.arc(centerX, centerY, 30, (360 - dhanurAngle) * Math.PI / 180, 0);
+            d_ctx.stroke();
+            d_ctx.fillText(dhanurAngle.toFixed(0) + "°", centerX + 30, centerY - 10);
+
+            // 5. Draw Center Pivot
+            d_ctx.beginPath();
+            d_ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+            d_ctx.fillStyle = '#f3f4f6';
+            d_ctx.fill();
+
+            dhanurReadingDisplay.textContent = dhanurAngle.toFixed(0) + "°";
+        }
+
+        // YASTI YANTRA (Staff/Cross-Staff) Logic
+        function adjustYasti(delta) {
+            yastiAltitude += delta;
+            yastiAltitude = Math.max(1, Math.min(89, yastiAltitude));
+            drawYasti();
+        }
+
+        function drawYasti() {
+            setCanvasDimensions(yastiCanvas);
+            const W = yastiCanvas.width;
+            const H = yastiCanvas.height;
+            y_ctx.clearRect(0, 0, W, H);
+
+            const staffX = W / 4;
+            const groundY = H - 20;
+            const staffHeight = H - 40;
+            const objectX = W * 0.9;
+            const observerY = groundY - 10; // Observer eye level
+
+            y_ctx.lineWidth = 3;
+            y_ctx.strokeStyle = '#f3f4f6';
+            y_ctx.fillStyle = '#f3f4f6';
+            y_ctx.font = '12px Inter';
+            y_ctx.textAlign = 'center';
+
+            // 1. Draw Ground
+            y_ctx.beginPath();
+            y_ctx.moveTo(0, groundY);
+            y_ctx.lineTo(W, groundY);
+            y_ctx.stroke();
+
+            // 2. Draw Object (Simulated Celestial Body)
+            // Calculate object height based on altitude and horizontal distance (simple geometry)
+            const objectHeight = (objectX - staffX) * Math.tan(yastiAltitude * Math.PI / 180);
+            const objectY = observerY - objectHeight;
+
+            y_ctx.beginPath();
+            y_ctx.arc(objectX, objectY, 8, 0, 2 * Math.PI);
+            y_ctx.fillStyle = '#06b6d4'; // Cyan
+            y_ctx.fill();
+            y_ctx.fillText("Star/Planet", objectX, objectY - 15);
+
+            // 3. Draw Vertical Staff (Yasti)
+            y_ctx.lineWidth = 5;
+            y_ctx.strokeStyle = '#8b5cf6'; // Purple
+            y_ctx.beginPath();
+            y_ctx.moveTo(staffX, groundY);
+            y_ctx.lineTo(staffX, groundY - staffHeight);
+            y_ctx.stroke();
+            y_ctx.fillText("Yasti", staffX, groundY - staffHeight - 5);
+            y_ctx.fillText("Observer", staffX, groundY + 15);
+
+            // 4. Draw Cross-Piece (Measurement Arm)
+            // The height on the staff where the cross-piece is placed for sighting
+            // In a yasti yantra, the sighting is done from the ground/eye level
+            const crossY = observerY - (objectX - staffX) * Math.tan(yastiAltitude * Math.PI / 180);
+            const crossLength = 50;
+
+            y_ctx.lineWidth = 3;
+            y_ctx.strokeStyle = '#f87171'; // Red
+            y_ctx.beginPath();
+            y_ctx.moveTo(staffX, crossY);
+            y_ctx.lineTo(staffX + crossLength, crossY);
+            y_ctx.stroke();
+
+            // 5. Draw Sighting Line (Hypotenuse)
+            y_ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            y_ctx.lineWidth = 1;
+            y_ctx.setLineDash([5, 5]);
+            y_ctx.beginPath();
+            y_ctx.moveTo(staffX, observerY); // Observer eye level (approx)
+            y_ctx.lineTo(objectX, objectY);
+            y_ctx.stroke();
+            y_ctx.setLineDash([]); // Reset line style
+
+            // 6. Draw Angle Arc
+            y_ctx.beginPath();
+            y_ctx.arc(staffX, observerY, 20, 0, -yastiAltitude * Math.PI / 180, true);
+            y_ctx.stroke();
+            y_ctx.fillText(yastiAltitude.toFixed(1) + "°", staffX + 30, observerY - 5);
+
+
+            yastiReadingDisplay.textContent = yastiAltitude.toFixed(1) + "°";
+        }
+
+
+        // PHALAK YANTRA (Board Instrument) Logic
+        function adjustPhalak(delta) {
+            phalakAltitude += delta;
+            phalakAltitude = Math.max(1, Math.min(89, phalakAltitude));
+            drawPhalak();
+        }
+
+        function drawPhalak() {
+            setCanvasDimensions(phalakCanvas);
+            const W = phalakCanvas.width;
+            const H = phalakCanvas.height;
+            p_ctx.clearRect(0, 0, W, H);
+
+            const boardX = W / 2;
+            const boardY = H - 20;
+            const gnomonHeight = 80;
+            const gnomonBaseX = boardX - 10;
+
+            // Calculate shadow length based on altitude
+            const shadowLength = gnomonHeight / Math.tan(phalakAltitude * Math.PI / 180);
+            const shadowTipX = gnomonBaseX + shadowLength;
+
+            p_ctx.lineWidth = 2;
+            p_ctx.strokeStyle = '#f3f4f6';
+            p_ctx.fillStyle = '#f3f4f6';
+            p_ctx.font = '12px Inter';
+            p_ctx.textAlign = 'center';
+
+            // 1. Draw Board (Phalak)
+            p_ctx.fillStyle = '#34d399'; // Green board
+            p_ctx.fillRect(boardX - 150, boardY - 10, 300, 20);
+            p_ctx.strokeStyle = '#f3f4f6';
+            p_ctx.strokeRect(boardX - 150, boardY - 10, 300, 20);
+            p_ctx.fillText("Phalak", boardX, boardY + 25);
+
+            // 2. Draw Gnomon (Pin)
+            p_ctx.lineWidth = 4;
+            p_ctx.strokeStyle = '#fcd34d'; // Amber/Gold
+            p_ctx.beginPath();
+            p_ctx.moveTo(gnomonBaseX, boardY - 10);
+            p_ctx.lineTo(gnomonBaseX, boardY - 10 - gnomonHeight);
+            p_ctx.stroke();
+            p_ctx.fillText("Gnomon", gnomonBaseX, boardY - 10 - gnomonHeight - 10);
+
+            // 3. Draw Shadow
+            p_ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            p_ctx.lineWidth = 3;
+            p_ctx.beginPath();
+            p_ctx.moveTo(gnomonBaseX, boardY - 5);
+            p_ctx.lineTo(shadowTipX, boardY - 5);
+            p_ctx.stroke();
+            p_ctx.fillText("Shadow Length", (gnomonBaseX + shadowTipX) / 2, boardY - 20);
+
+            // 4. Draw Sun Ray (Hypotenuse)
+            p_ctx.strokeStyle = '#f97316'; // Orange
+            p_ctx.lineWidth = 1;
+            p_ctx.setLineDash([5, 2]);
+            p_ctx.beginPath();
+            p_ctx.moveTo(gnomonBaseX, boardY - 10 - gnomonHeight);
+            p_ctx.lineTo(shadowTipX, boardY - 10);
+            p_ctx.stroke();
+            p_ctx.setLineDash([]);
+
+            // 5. Draw Altitude Angle Arc
+            p_ctx.beginPath();
+            p_ctx.arc(shadowTipX, boardY - 10, 20, Math.PI, Math.PI + (phalakAltitude * Math.PI / 180), false);
+            p_ctx.stroke();
+            p_ctx.textAlign = 'left';
+            p_ctx.fillText(phalakAltitude.toFixed(1) + "°", shadowTipX - 30, boardY - 30);
+
+
+            phalakReadingDisplay.textContent = phalakAltitude.toFixed(1) + "°";
+        }
+
+
+        // ====================================================================
+        // VERNIER LOGIC
+        // ====================================================================
+
+        function calculateVernierReading() {
+            // vernierXOffset is the precise reading in mm for this simulation
+            const readingMM = vernierXOffset;
+
+            // 1. Main Scale Reading (MSR): Reading just before the Vernier zero mark (in full mm)
+            const MSR_mm = Math.floor(readingMM);
+
+            // 2. Find Coinciding Vernier Scale Division (CVSD):
+            const fractionalPart_mm = readingMM - MSR_mm;
+            
+            // CVSD is the index (0-9) such that (CVSD * 0.1) is closest to fractionalPart_mm
+            // Since LC is 0.1 mm, CVSD = round(fractionalPart_mm / 0.1)
+            let CVSD = Math.round(fractionalPart_mm / V_LC);
+            
+            // Handle the case where rounding up resulted in CVSD 10 (meaning the next full mm is aligned).
+            if (CVSD === V_SCALE_DIVS) {
+                CVSD = 0; // If 10 coincides, reading is MSR+1, and CVSD is 0 for the next MSR
+            }
+
+            // Recalculate reading based on MSR and CVSD for display consistency
+            const totalReading = MSR_mm + (CVSD * V_LC);
+            
+            vernierReadingDisplay.textContent = totalReading.toFixed(2) + " mm";
+            return { MSR: MSR_mm, CVSD: CVSD, total: totalReading };
+        }
+
+
+        function drawVernier() {
+            setCanvasDimensions(vernierCanvas);
+            const W = vernierCanvas.width;
+            const H = vernierCanvas.height;
+            v_ctx.clearRect(0, 0, W, H);
+
+            // --- DRAWING CONSTANTS ---
+            const zeroOffset = V_START_OFFSET_PIX; // Pixel location of MS 0 mark
+            const MSR_Y = 50; // Main Scale Top Y position (rail)
+
+            // 1. Draw Caliper Body and Jaws (More realistic look)
+
+            // A. Main Body/Rail (Fixed)
+            v_ctx.fillStyle = '#6b7280'; // Darker metallic grey
+            v_ctx.fillRect(0, MSR_Y, W, 25);
+            v_ctx.strokeStyle = '#374151';
+            v_ctx.strokeRect(0, MSR_Y, W, 25);
+
+            // B. Fixed Jaw (Left side)
+            v_ctx.fillStyle = '#4b5563';
+            v_ctx.fillRect(0, MSR_Y, zeroOffset, 50); // Represents the fixed jaw extension
+            v_ctx.strokeRect(0, MSR_Y, zeroOffset, 50);
+
+            // 2. Draw Main Scale Markings (Fixed)
+            v_ctx.fillStyle = '#000000'; // Black text/marks for MS on light background
+            v_ctx.font = '10px Inter';
+            v_ctx.textAlign = 'center';
+
+            for (let i = 0; i <= V_TOTAL_LENGTH_MM; i++) {
+                const x = zeroOffset + i * V_MS_PIX_PER_MM;
+                if (x > W - 10) break;
+
+                let length = 5;
+                if (i % 10 === 0) length = 15; // Centimeter marks (labeled)
+                else if (i % 5 === 0) length = 10; // Half centimeter marks
+
+                v_ctx.beginPath();
+                v_ctx.moveTo(x, MSR_Y + 25); // Markings drawn from the bottom of the scale body up
+                v_ctx.lineTo(x, MSR_Y + 25 - length);
+                v_ctx.strokeStyle = '#000000';
+                v_ctx.stroke();
+                
+                // Labels (in mm)
+                if (i % 10 === 0) {
+                    v_ctx.fillText((i).toString(), x, MSR_Y + 40);
+                }
+            }
+
+            // 3. Calculate Readings and Coincidence
+            const { MSR, CVSD } = calculateVernierReading();
+            const vernierZeroX = zeroOffset + vernierXOffset * V_MS_PIX_PER_MM; // Position of Vernier zero mark
+
+            // 4. Draw Object (fixed relative to Vernier zero)
+            v_ctx.fillStyle = '#1e3a8a'; // Dark blue object
+            v_ctx.fillRect(zeroOffset + 5, 0, vernierZeroX - zeroOffset - 5, MSR_Y);
+            
+            // 5. Draw Movable Jaw Assembly (Vernier Scale)
+            const V_SCALE_PIX_WIDTH = 9 * V_MS_PIX_PER_MM; // 9 mm = 9 * 20 = 180 pixels
+            const V_MARK_DISTANCE_PIX = V_SCALE_PIX_WIDTH / V_SCALE_DIVS; // 18 pixels per VSD
+
+            // Draw the movable scale body (just above the MSR)
+            v_ctx.fillStyle = '#374151'; // Darker body for the movable scale
+            v_ctx.fillRect(vernierZeroX, MSR_Y - 20, V_SCALE_PIX_WIDTH, 20);
+            v_ctx.strokeStyle = '#f3f4f6';
+            v_ctx.strokeRect(vernierZeroX, MSR_Y - 20, V_SCALE_PIX_WIDTH, 20);
+
+            // Draw the movable jaw
+            v_ctx.fillStyle = '#4b5563';
+            v_ctx.fillRect(vernierZeroX, MSR_Y - 50, 20, 50); // Draw movable jaw leading edge
+            v_ctx.strokeRect(vernierZeroX, MSR_Y - 50, 20, 50);
+
+            // 6. Draw Vernier Scale Markings (Movable)
+            for (let i = 0; i <= V_SCALE_DIVS; i++) {
+                const x = vernierZeroX + i * V_MARK_DISTANCE_PIX;
+                let length = 15;
+
+                // Highlight the coinciding mark
+                const markColor = (i === CVSD) ? '#ef4444' : '#f3f4f6'; // Red for coincidence
+
+                v_ctx.beginPath();
+                v_ctx.moveTo(x, MSR_Y - 20); // Scale starts at the top of the movable body
+                v_ctx.lineTo(x, MSR_Y - 20 + length);
+                v_ctx.strokeStyle = markColor;
+                v_ctx.lineWidth = (i === CVSD) ? 2 : 1;
+                v_ctx.stroke();
+                v_ctx.lineWidth = 1;
+
+                if (i % 5 === 0) {
+                     v_ctx.fillStyle = (i === CVSD) ? '#ef4444' : '#f3f4f6';
+                     v_ctx.fillText(i.toString(), x, MSR_Y - 25);
+                }
+            }
+        }
+
+        function adjustVernier(delta) {
+            vernierXOffset += delta;
+            // Clamp value between a reasonable range (e.g., 0 to 100 mm)
+            vernierXOffset = parseFloat(Math.max(0, Math.min(100, vernierXOffset)).toFixed(2)); 
+            drawVernier();
+        }
+        
+        // Handle dragging the vernier scale
+        let lastVernierX = 0;
+
+        vernierCanvas.addEventListener('mousedown', (e) => {
+            const rect = vernierCanvas.getBoundingClientRect();
+            const mouseX = getEventX(e) - rect.left;
+            
+            const vernierZeroX = V_START_OFFSET_PIX + vernierXOffset * V_MS_PIX_PER_MM;
+            const V_SCALE_PIX_WIDTH = 9 * V_MS_PIX_PER_MM;
+            
+            // Check if the click is within the movable scale area
+            if (mouseX >= vernierZeroX && mouseX <= vernierZeroX + V_SCALE_PIX_WIDTH) {
+                isVernierDragging = true;
+                vernierCanvas.classList.add('cursor-grabbing');
+                lastVernierX = mouseX;
+                e.preventDefault(); // Prevent default if inside the scale
+            }
+        });
+        
+        vernierCanvas.addEventListener('touchstart', (e) => {
+             const rect = vernierCanvas.getBoundingClientRect();
+             const mouseX = getEventX(e) - rect.left;
+            
+             const vernierZeroX = V_START_OFFSET_PIX + vernierXOffset * V_MS_PIX_PER_MM;
+             const V_SCALE_PIX_WIDTH = 9 * V_MS_PIX_PER_MM;
+            
+            if (mouseX >= vernierZeroX && mouseX <= vernierZeroX + V_SCALE_PIX_WIDTH) {
+                isVernierDragging = true;
+                lastVernierX = mouseX;
+                e.preventDefault(); 
+            }
+        }, { passive: false });
+
+
+        // ====================================================================
+        // MICROMETER LOGIC (REVISED FOR VISUAL REALISM)
+        // ====================================================================
+
+        function calculateMicrometerReading() {
+            const totalTravelMM = micrometerCSR * M_LC;
+            
+            // 1. Main Scale Reading (MSR): The reading on the barrel (in full and half mm)
+            // Determine how many full pitches (0.5 mm) have passed.
+            const MSR_Value = Math.floor(totalTravelMM / M_PITCH) * M_PITCH; 
+
+            // 2. Circular Scale Reading (CSR): The coinciding division on the thimble
+            const CSR_Index = micrometerCSR % M_THIMBLE_DIVS;
+            const CSR_Value = CSR_Index * M_LC;
+
+            // Total Reading (should match the starting totalTravelMM, but calculated using MSR and CSR)
+            const reading = MSR_Value + CSR_Value;
+            micrometerReadingDisplay.textContent = reading.toFixed(2) + " mm";
+            return { MSR: MSR_Value, CSR_Index: CSR_Index, total: reading };
+        }
+
+        function drawMicrometer() {
+            setCanvasDimensions(micrometerCanvas);
+            const W = micrometerCanvas.width;
+            const H = micrometerCanvas.height;
+            m_ctx.clearRect(0, 0, W, H);
+
+            const CENTER_Y = H / 2;
+            const SCALE_START_X = 100; // Start of barrel scale
+            const SCALE_END_X = W - 150; // End of barrel scale
+            const BARREL_RADIUS = 15;
+            const THIMBLE_WIDTH = 60;
+            const THIMBLE_RADIUS = 35;
+            const PIX_PER_MM = 25; // Visual scale factor
+
+            // Calculate current position of thimble based on total travel
+            const totalTravelMM = micrometerCSR * M_LC;
+            const thimbleOffsetPx = totalTravelMM * PIX_PER_MM;
+            const thimbleX = SCALE_END_X - thimbleOffsetPx;
+
+            const { MSR, CSR_Index } = calculateMicrometerReading();
+
+
+            m_ctx.lineWidth = 1;
+            m_ctx.font = '10px Inter';
+            m_ctx.textAlign = 'center';
+
+            // 1. Draw Frame (C-shape implied, focus on the measuring faces)
+            m_ctx.fillStyle = '#6b7280'; // Dark grey metallic
+            m_ctx.fillRect(0, CENTER_Y - 20, 50, 40); // Anvil block
+            m_ctx.fillRect(50, CENTER_Y, SCALE_END_X - 50, 10); // Frame rod for rigidity
+
+            // 2. Draw Object
+            m_ctx.fillStyle = '#f97316'; // Orange object
+            m_ctx.fillRect(50, CENTER_Y - 30, thimbleX - 50, 60);
+
+            // 3. Draw Barrel (Sleeve) - Fixed part with Main Scale
+            m_ctx.fillStyle = '#a1a1aa'; // Light silver/grey barrel
+            m_ctx.fillRect(SCALE_START_X, CENTER_Y - BARREL_RADIUS, SCALE_END_X - SCALE_START_X, BARREL_RADIUS * 2);
+            m_ctx.strokeStyle = '#374151';
+            m_ctx.strokeRect(SCALE_START_X, CENTER_Y - BARREL_RADIUS, SCALE_END_X - SCALE_START_X, BARREL_RADIUS * 2);
+            
+            // 4. Draw Datum Line (Axis)
+            m_ctx.beginPath();
+            m_ctx.moveTo(SCALE_START_X, CENTER_Y);
+            m_ctx.lineTo(SCALE_END_X, CENTER_Y);
+            m_ctx.lineWidth = 2;
+            m_ctx.strokeStyle = '#fcd34d'; // Yellow datum line
+            m_ctx.stroke();
+
+            // 5. Draw Main Scale Divisions (Barrel)
+            const maxMM = Math.floor((SCALE_END_X - SCALE_START_X) / PIX_PER_MM);
+            for (let i = 0; i <= maxMM; i++) {
+                const x = SCALE_START_X + i * PIX_PER_MM;
+                
+                // Full mm marks (Below datum line, every 2*0.5mm=1mm)
+                if (i % 2 === 0) {
+                    m_ctx.beginPath();
+                    m_ctx.moveTo(x, CENTER_Y);
+                    m_ctx.lineTo(x, CENTER_Y + 8);
+                    m_ctx.strokeStyle = '#000000';
+                    m_ctx.stroke();
+
+                    // Labels for full mm (0, 1, 2, 3...)
+                    m_ctx.fillStyle = '#000000';
+                    m_ctx.fillText((i / 2).toString(), x, CENTER_Y + 18);
+                }
+
+                // Half mm marks (Above datum line)
+                if (i % 2 !== 0) {
+                    m_ctx.beginPath();
+                    m_ctx.moveTo(x, CENTER_Y);
+                    m_ctx.lineTo(x, CENTER_Y - 5);
+                    m_ctx.strokeStyle = '#000000';
+                    m_ctx.stroke();
+                }
+
+                // Highlight MSR mark (full/half mm mark just exposed by thimble edge)
+                const msr_mm_val = i * M_PITCH; // 0, 0.5, 1.0, 1.5, ...
+                if (msr_mm_val === MSR) {
+                    // Check if this mark is visible (to the left of the thimble edge)
+                    if (x < thimbleX) {
+                        m_ctx.strokeStyle = '#ef4444';
+                        m_ctx.lineWidth = 2;
+                        m_ctx.beginPath();
+                        m_ctx.moveTo(x, CENTER_Y - BARREL_RADIUS);
+                        m_ctx.lineTo(x, CENTER_Y + BARREL_RADIUS);
+                        m_ctx.stroke();
+                        m_ctx.lineWidth = 1;
+                    }
+                }
+            }
+            
+            // 6. Draw Thimble (Movable)
+            m_ctx.fillStyle = '#4b5563'; // Darker grey thimble
+            m_ctx.fillRect(thimbleX, CENTER_Y - THIMBLE_RADIUS, THIMBLE_WIDTH, THIMBLE_RADIUS * 2);
+            m_ctx.strokeStyle = '#f3f4f6';
+            m_ctx.strokeRect(thimbleX, CENTER_Y - THIMBLE_RADIUS, THIMBLE_WIDTH, THIMBLE_RADIUS * 2);
+            
+            // 7. Draw Circular Scale Divisions (Thimble) - Simplified vertical scale on the thimble edge
+            const THIMBLE_SCALE_X = thimbleX + 2;
+            const DIVISION_PIX_HEIGHT = (THIMBLE_RADIUS * 2) / M_THIMBLE_DIVS;
+            
+            // The zero division (and subsequent ones) is aligned based on CSR_Index
+            const alignmentShift = CSR_Index * DIVISION_PIX_HEIGHT;
+            
+            for (let i = 0; i < M_THIMBLE_DIVS; i++) {
+                // Calculate the y position of the line for division 'i'
+                // Zero division should align perfectly with the datum line (CENTER_Y)
+                // We offset the position by `alignmentShift` so the correct line hits CENTER_Y
+                const y = CENTER_Y + (i * DIVISION_PIX_HEIGHT) - alignmentShift;
+                
+                // Only draw marks visible on the thimble's face
+                if (y >= CENTER_Y - THIMBLE_RADIUS && y <= CENTER_Y + THIMBLE_RADIUS) {
+                    
+                    // Highlight the coinciding mark
+                    const markColor = (i === CSR_Index) ? '#ef4444' : '#f3f4f6';
+
+                    m_ctx.beginPath();
+                    m_ctx.moveTo(THIMBLE_SCALE_X, y);
+                    m_ctx.lineTo(THIMBLE_SCALE_X + 10, y);
+                    m_ctx.strokeStyle = markColor;
+                    m_ctx.lineWidth = (i === CSR_Index) ? 2 : 1;
+                    m_ctx.stroke();
+                    
+                    if (i % 5 === 0) {
+                        m_ctx.fillStyle = markColor;
+                        m_ctx.textAlign = 'left';
+                        m_ctx.fillText(i.toString(), THIMBLE_SCALE_X + 12, y + 3);
+                    }
+                }
+            }
+            
+            // Draw Spindle (connection from thimble to object)
+            m_ctx.fillStyle = '#a1a1aa';
+            m_ctx.fillRect(thimbleX - 50, CENTER_Y - 5, 50, 10);
+            m_ctx.strokeStyle = '#374151';
+            m_ctx.strokeRect(thimbleX - 50, CENTER_Y - 5, 50, 10);
+
+
+            calculateMicrometerReading();
+        }
+
+        function adjustMicrometer(delta) {
+            micrometerCSR += delta;
+            // Clamp total rotation to a max value (e.g., 500 divisions or 10 mm travel)
+            micrometerCSR = Math.max(0, Math.min(500, micrometerCSR));
+            drawMicrometer();
+        }
+
+
+        // ====================================================================
+        // GLOBAL DRAG HANDLERS
+        // ====================================================================
+
+        function handleGlobalMove(e) {
+            e.preventDefault();
+
+            if (isChakraDragging) {
+                handleChakraDrag(e);
+            } else if (isVernierDragging) {
+                const rect = vernierCanvas.getBoundingClientRect();
+                const mouseX = getEventX(e) - rect.left;
+                
+                const deltaX = mouseX - lastVernierX;
+                
+                // Convert pixel movement to mm movement
+                const deltaMM = deltaX / V_MS_PIX_PER_MM;
+                
+                adjustVernier(deltaMM);
+                
+                lastVernierX = mouseX;
+            }
+        }
+
+        function handleGlobalUp() {
+            if (isChakraDragging) {
+                isChakraDragging = false;
+                chakraCanvas.classList.remove('cursor-grabbing');
+            }
+            if (isVernierDragging) {
+                isVernierDragging = false;
+                vernierCanvas.classList.remove('cursor-grabbing');
+                // Snap the offset to the nearest least count value after drag ends
+                vernierXOffset = parseFloat((Math.round(vernierXOffset / V_LC) * V_LC).toFixed(2));
+                drawVernier();
+            }
+        }
+
+        // --- Attach Global Listeners for Drag End ---
+        // Mouse Listeners
+        window.addEventListener('mousemove', handleGlobalMove);
+        window.addEventListener('mouseup', handleGlobalUp);
+        
+        // Touch Listeners
+        window.addEventListener('touchmove', handleGlobalMove, { passive: false });
+        window.addEventListener('touchend', handleGlobalUp);
+        window.addEventListener('touchcancel', handleGlobalUp);
+
+        // ====================================================================
+        // INITIALIZATION
+        // ====================================================================
+
+        window.onload = function() {
+            // Initial draw calls for all simulations to render
+            drawChakra();
+            drawDhanur();
+            drawYasti();
+            drawPhalak();
+            
+            // Set initial precision tool readings to a non-zero value
+            vernierXOffset = 23.7; // 23.70 mm
+            micrometerCSR = 150 + 37; // 3.5 mm + 37 divs = 3.87 mm
+            
+            drawVernier();
+            drawMicrometer();
+
+            // Add resize listener to maintain responsiveness
+            window.addEventListener('resize', () => {
+                drawChakra();
+                drawDhanur();
+                drawYasti();
+                drawPhalak();
+                drawVernier();
+                drawMicrometer();
+            });
+        };
+
+        // add Three.js and OrbitControls (non-module) in the head area above existing scripts
+const _addThreeScripts = (function(){
+  const head = document.head;
+  if (!document.querySelector('script[data-three-added]')) {
+    console.log('[3D] Injecting three + controls scripts');
+    const s1 = document.createElement('script');
+    s1.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+    s1.dataset.threeAdded = '1';
+    s1.onload = () => console.log('[3D] three.min.js loaded');
+    s1.onerror = () => console.error('[3D] failed to load three.min.js');
+    head.appendChild(s1);
+    const s2 = document.createElement('script');
+    s2.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js';
+    s2.onload = () => console.log('[3D] OrbitControls.js loaded');
+    s2.onerror = () => console.error('[3D] failed to load OrbitControls.js');
+    head.appendChild(s2);
+  }
+})();
+
+// --- 3D VERNIER & MICROMETER SETUP ---
+// We'll create separate THREE scenes/renderers for the two tools and update them from the same state vars.
+// The new functions initVernier3D() and initMicrometer3D() are invoked at startup (window.onload).
+
+let vernier3 = { scene: null, camera: null, renderer: null, controls: null, meshes: {} };
+let mic3 = { scene: null, camera: null, renderer: null, controls: null, meshes: {} };
+
+// Utility: attach a WebGL renderer next to an existing canvas element (hides the 2D canvas)
+function createRendererForCanvas(containerCanvas) {
+  // DO NOT hide the 2D canvas immediately — keep it until 3D is confirmed rendering
+  const parent = containerCanvas.parentNode;
+  // ensure parent can hold absolutely-positioned renderer
+  if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
+
+  const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  // make renderer overlay the existing canvas and fill its parent
+  r.domElement.style.position = 'absolute';
+  r.domElement.style.left = '0';
+  r.domElement.style.top = '0';
+  r.domElement.style.width = '100%';
+  r.domElement.style.height = '100%';
+  r.domElement.style.display = 'block';
+  r.domElement.style.pointerEvents = 'auto';
+  r.domElement.tabIndex = 0;
+  parent.appendChild(r.domElement);
+
+  // set initial size immediately to avoid zero-size canvas
+  const rect = parent.getBoundingClientRect();
+  const w = Math.max(64, Math.floor(rect.width));
+  const h = Math.max(64, Math.floor(rect.height));
+  r.setSize(w, h, false);
+
+  return r;
+}
+
+function resizeRendererToElement(renderer, el) {
+  const rect = el.parentNode.getBoundingClientRect();
+  const w = Math.max(64, Math.floor(rect.width));
+  const h = Math.max(64, Math.floor(rect.height));
+  renderer.setSize(w, h, false);
+  // update camera aspect if present
+  return { w, h };
+}
+
+// VERNIER 3D: rail, fixed jaw, movable jaw/block, object between jaws
+function initVernier3D() {
+  // guard
+  if (typeof THREE === 'undefined') return;
+
+  const canvasEl = vernierCanvas;
+  const r = createRendererForCanvas(canvasEl);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x111827); // match page theme
+
+  const cam = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+  cam.position.set(0, 30, 120);
+  cam.lookAt(0, 0, 0);
+
+  const controls = new THREE.OrbitControls(cam, r.domElement);
+  controls.enablePan = false;
+  controls.enableRotate = false; // disable user orbit to keep simple UX
+  controls.enableZoom = true;
+
+  // lights
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const d = new THREE.DirectionalLight(0xffffff, 0.8);
+  d.position.set(40, 100, 50);
+  scene.add(d);
+
+  // scale factors (link 3D mm -> world units)
+  const pxPerMM = 1; // choose world units per mm for 3D visualization
+  const railLengthMM = Math.min(V_TOTAL_LENGTH_MM, 150);
+
+  // rail (long box)
+  const railGeo = new THREE.BoxGeometry(railLengthMM * pxPerMM + 20, 6, 14);
+  const railMat = new THREE.MeshStandardMaterial({ color: 0x6b7280, metalness: 0.3, roughness: 0.6 });
+  const rail = new THREE.Mesh(railGeo, railMat);
+  rail.position.set((railLengthMM * pxPerMM) / 2 - V_START_OFFSET_PIX * 0.5, 0, 0);
+  scene.add(rail);
+
+  // fixed jaw (left)
+  const fixedJawGeo = new THREE.BoxGeometry(20, 30, 18);
+  const fixedJaw = new THREE.Mesh(fixedJawGeo, new THREE.MeshStandardMaterial({ color: 0x4b5563 }));
+  fixedJaw.position.set(- (railLengthMM * pxPerMM)/2 - 10 + V_START_OFFSET_PIX * 0.5, 0, 0);
+  scene.add(fixedJaw);
+
+  // movable jaw assembly (block + jaw)
+  const movableGroup = new THREE.Group();
+  const blockGeo = new THREE.BoxGeometry( V_SCALE_DIVS * pxPerMM * 9, 16, 14 );
+  const blockMat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, metalness: 0.2, roughness: 0.4 });
+  const block = new THREE.Mesh(blockGeo, blockMat);
+  block.position.set(0, 8, 0);
+  movableGroup.add(block);
+
+  const movableJawGeo = new THREE.BoxGeometry(20, 36, 18);
+  const movableJaw = new THREE.Mesh(movableJawGeo, new THREE.MeshStandardMaterial({ color: 0x4b5563 }));
+  movableJaw.position.set(- (blockGeo.parameters.width/2) + 10, -10, 0);
+  movableGroup.add(movableJaw);
+
+  // initial position from vernierXOffset (in mm)
+  movableGroup.position.set( (V_START_OFFSET_PIX + vernierXOffset * V_MS_PIX_PER_MM) * 0.5, 0, 0);
+  scene.add(movableGroup);
+
+  // object being measured (between jaws) - simple box
+  const objGeo = new THREE.BoxGeometry(  (vernierXOffset) * pxPerMM * 2 + 1 , 18, 10 );
+  const objMat = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.15, roughness: 0.6 });
+  const obj = new THREE.Mesh(objGeo, objMat);
+  // place object near center between jaws
+  obj.position.set(movableGroup.position.x/2 - 5, 0, 0);
+  scene.add(obj);
+
+  // small divisions on the movable block to mimic vernier marks
+  const marks = new THREE.Group();
+  const divCount = V_SCALE_DIVS;
+  const markHeight = 8;
+  const markDepth = 1;
+  const markThickness = 0.6;
+  // spacing in world units
+  const vBlockWidth = blockGeo.parameters.width;
+  for (let i=0;i<=divCount;i++){
+    const mx = -vBlockWidth/2 + 8 + i * (vBlockWidth - 16) / divCount;
+    const g = new THREE.Mesh(new THREE.BoxGeometry(markThickness, markHeight, markDepth), new THREE.MeshStandardMaterial({ color: 0xffffff }));
+    g.position.set(mx, 14, blockGeo.parameters.depth/2 + 0.51);
+    marks.add(g);
+  }
+  block.add(marks);
+
+  // store references
+  vernier3.scene = scene;
+  vernier3.camera = cam;
+  vernier3.renderer = r;
+  vernier3.controls = controls;
+  vernier3.meshes = { rail, fixedJaw, movableGroup, block, movableJaw, obj, marks };
+
+  // interaction: drag on renderer to slide movableGroup horizontally
+  let dragging = false;
+  let lastPtX = 0;
+  r.domElement.addEventListener('pointerdown', (ev) => {
+    const rect = r.domElement.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    // compute world hit test: simple screen -> approximate world X
+    lastPtX = x;
+    dragging = true;
+    r.domElement.setPointerCapture(ev.pointerId);
+  });
+  window.addEventListener('pointermove', (ev) => {
+    if (!dragging) return;
+    const rect = r.domElement.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const dx = x - lastPtX;
+    lastPtX = x;
+    // convert pixels to mm (use renderer width as proxy)
+    const pixelToMM = V_MS_PIX_PER_MM / (r.getSize ? r.getSize().width / (railLengthMM*pxPerMM + 40) : V_MS_PIX_PER_MM);
+    // simpler: map dx to mm by ratio of canvas pixels to rail pixel length we used: use V_MS_PIX_PER_MM units
+    const deltaMM = dx / (V_MS_PIX_PER_MM * 0.5); // coarse tuning
+    vernierXOffset += deltaMM;
+    vernierXOffset = Math.max(0, Math.min(V_TOTAL_LENGTH_MM, vernierXOffset));
+    // update 3D positions
+    updateVernier3D();
+  });
+  window.addEventListener('pointerup', (ev) => {
+    if (dragging) {
+      dragging = false;
+      try { r.domElement.releasePointerCapture(ev.pointerId); } catch(_) {}
+      // snap to least count
+      vernierXOffset = Math.round(vernierXOffset / V_LC) * V_LC;
+      updateVernier3D();
+    }
+  });
+
+  // resize handler and animation loop
+  function onResize() {
+    const rect = vernierCanvas.parentNode.getBoundingClientRect();
+    r.setSize(Math.max(320, Math.floor(rect.width)), Math.max(120, Math.floor(rect.height)), false);
+    cam.aspect = r.domElement.width / r.domElement.height;
+    cam.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', onResize);
+  onResize();
+
+  // render loop (shared single RAF)
+  function renderV() {
+    requestAnimationFrame(renderV);
+    // ensure object width follows vernier offset
+    updateVernier3D();
+    controls.update();
+    r.render(scene, cam);
+  }
+  renderV();
+}
+
+function updateVernier3D() {
+  if (!vernier3.scene) return;
+  const m = vernier3.meshes;
+  // place movable group based on vernierXOffset -> compute world x
+  // Use simple mapping: one canvas pixel ~ 0.5 world unit per earlier conversion
+  const worldX = (V_START_OFFSET_PIX + vernierXOffset * V_MS_PIX_PER_MM) * 0.5 - (V_TOTAL_LENGTH_MM * 0.5);
+  m.movableGroup.position.x = worldX;
+  // update object width visually (place between fixed and movable jaw)
+  const fixedJawX = m.fixedJaw.position.x + 10;
+  const movableEdgeX = m.movableGroup.position.x - (m.block.geometry.parameters.width/2) + 10;
+  const gap = Math.max(2, movableEdgeX - fixedJawX);
+  m.obj.scale.x = Math.max(0.01, gap / (m.obj.geometry.parameters.width || 1));
+  m.obj.position.x = fixedJawX + gap / 2;
+  // update DOM reading
+  vernierReadingDisplay.textContent = vernierXOffset.toFixed(2) + ' mm';
+}
+
+// MICROMETER 3D: C-frame, anvil, spindle, thimble (rotating barrel)
+function initMicrometer3D() {
+  if (typeof THREE === 'undefined') return;
+
+  const canvasEl = micrometerCanvas;
+  const r = createRendererForCanvas(canvasEl);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x111827);
+
+  const cam = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+  cam.position.set(0, 60, 160);
+  cam.lookAt(0, 0, 0);
+
+  const controls = new THREE.OrbitControls(cam, r.domElement);
+  controls.enablePan = false;
+  controls.enableRotate = false;
+  controls.enableZoom = true;
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.8);
+  dl.position.set(40, 100, 50);
+  scene.add(dl);
+
+  // simple stylized C-frame
+  const frameGeo = new THREE.BoxGeometry(140, 80, 18);
+  const frame = new THREE.Mesh(frameGeo, new THREE.MeshStandardMaterial({ color: 0x6b7280 }));
+  frame.position.set(0, 0, 0);
+  scene.add(frame);
+
+  // anvil (fixed face)
+  const anvil = new THREE.Mesh(new THREE.BoxGeometry(12, 18, 18), new THREE.MeshStandardMaterial({ color: 0x111827 }));
+  anvil.position.set(-48, 0, 0);
+  scene.add(anvil);
+
+  // sleeve / barrel (visual main scale)
+  const sleeve = new THREE.Mesh(new THREE.BoxGeometry(120, 24, 16), new THREE.MeshStandardMaterial({ color: 0xa1a1aa }));
+  sleeve.position.set(24, 0, 0);
+  scene.add(sleeve);
+
+  // spindle (movable jaw) attached to thimble
+  const spindle = new THREE.Mesh(new THREE.BoxGeometry(10, 14, 14), new THREE.MeshStandardMaterial({ color: 0x374151 }));
+  spindle.position.set(-10, 0, 0);
+  scene.add(spindle);
+
+  // thimble (rotating barrel)
+  const thimble = new THREE.Mesh(new THREE.CylinderGeometry(18, 18, 36, 32), new THREE.MeshStandardMaterial({ color: 0x06b6d4 }));
+  thimble.rotation.z = Math.PI/2;
+  thimble.position.set(64, 0, 0);
+  scene.add(thimble);
+
+  // thimble markings: small boxes around cylinder
+  const ticks = new THREE.Group();
+  const tickMat = new THREE.MeshStandardMaterial({ color: 0x111827 });
+  const divs = Math.min(M_THIMBLE_DIVS, 50);
+  for (let i=0;i<divs;i++){
+    const angle = (i/divs) * Math.PI * 2;
+    const tx = Math.cos(angle) * 18;
+    const ty = Math.sin(angle) * 18;
+    const t = new THREE.Mesh(new THREE.BoxGeometry(1.2, 4, 1), tickMat);
+    t.position.set(thimble.position.x + tx, ty, 0);
+    t.rotation.z = -angle;
+    ticks.add(t);
+  }
+  scene.add(ticks);
+
+  // store references
+  mic3.scene = scene;
+  mic3.camera = cam;
+  mic3.renderer = r;
+  mic3.controls = controls;
+  mic3.meshes = { frame, anvil, sleeve, spindle, thimble, ticks };
+
+  // interaction: drag right side horizontally to rotate thimble -> update CSR
+  let dragging = false;
+  let lastX = 0;
+  r.domElement.addEventListener('pointerdown', (ev) => {
+    const rect = r.domElement.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    // if click is on right half, start drag
+    if (x > rect.width * 0.55) {
+      dragging = true;
+      lastX = x;
+      r.domElement.setPointerCapture(ev.pointerId);
+    }
+  });
+  window.addEventListener('pointermove', (ev) => {
+    if (!dragging) return;
+    const rect = r.domElement.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const dx = x - lastX;
+    lastX = x;
+    // convert dx to micrometer divisions
+    const divDelta = Math.round(dx / 4); // tune sensitivity
+    if (divDelta !== 0) {
+      micrometerCSR = Math.max(0, Math.min(500, micrometerCSR + divDelta));
+      updateMicrometer3D();
+    }
+  });
+  window.addEventListener('pointerup', (ev) => {
+    if (dragging) {
+      dragging = false;
+      try { r.domElement.releasePointerCapture(ev.pointerId); } catch(_) {}
+    }
+  });
+
+  function onResize() {
+    const rect = micrometerCanvas.parentNode.getBoundingClientRect();
+    r.setSize(Math.max(320, Math.floor(rect.width)), Math.max(120, Math.floor(rect.height)), false);
+    cam.aspect = r.domElement.width / r.domElement.height;
+    cam.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', onResize);
+  onResize();
+
+  function renderM() {
+    requestAnimationFrame(renderM);
+    updateMicrometer3D();
+    controls.update();
+    r.render(scene, cam);
+  }
+  renderM();
+}
+
+function updateMicrometer3D(){
+  if (!mic3.scene) return;
+  const m = mic3.meshes;
+  // compute total mm
+  const mm = micrometerCSR * M_LC;
+  // place spindle relative to anvil: map mm -> x offset
+  const pxPerMM = 10; // world units per mm for micrometer visualization
+  // anvil x ~ -48, spindle base near -10; we shift spindle left/right
+  m.spindle.position.x = -48 + mm * pxPerMM + 10;
+  // rotate thimble according to CSR (visual only)
+  const rotation = (micrometerCSR % M_THIMBLE_DIVS) / M_THIMBLE_DIVS * Math.PI * 2;
+  m.thimble.rotation.x = rotation;
+  // update ticks orientation (rotate around thimble center)
+  m.ticks.rotation.z = rotation;
+  // update DOM readout
+  const reading = (Math.floor(mm / M_PITCH) * M_PITCH) + ((micrometerCSR % M_THIMBLE_DIVS) * M_LC);
+  micrometerReadingDisplay.textContent = reading.toFixed(2) + ' mm';
+}
+
+// Initialize 3D after window load (preserve your 2D draws)
+const _init3D = function(){
+  // delay until Three is loaded
+  const wait = () => {
+    console.log('[3D] check: THREE=', typeof THREE, 'OrbitControls=', !!(typeof THREE !== 'undefined' && THREE.OrbitControls));
+    if (typeof THREE !== 'undefined' && typeof THREE.OrbitControls !== 'undefined') {
+      console.log('[3D] THREE + OrbitControls present — initializing 3D');
+      // now initialize scenes; after init succeeds we can hide 2D canvases if desired
+      initVernier3D();
+      initMicrometer3D();
+      // hide the 2D canvases now that 3D renderers are active
+      try { vernierCanvas.style.display = 'none'; } catch(_) {}
+      try { micrometerCanvas.style.display = 'none'; } catch(_) {}
+    } else {
+      // try again shortly
+      setTimeout(wait, 150);
+    }
+  };
+  wait();
+};
+
+// call the 3D init at the end of your existing window.onload
+(function(){
+  const oldOnload = window.onload;
+  window.onload = function(ev){
+    if (typeof oldOnload === 'function') oldOnload(ev);
+    _init3D();
+  };
+})();
+    </script>
+</body>
+</html>
